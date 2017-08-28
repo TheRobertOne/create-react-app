@@ -1,5 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const ContainerOne = () => <div>ContainerOne</div>
+class ContainerOne extends Component {
+    render() {
+        return (
+            <div>
+                ContainerOne
+            </div>
+        );
+    }
+}
 
-export default ContainerOne
+export default ContainerOne;
