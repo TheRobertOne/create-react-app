@@ -6,7 +6,6 @@ export default function asyncComponent(importComponent) {
 
     constructor(props) {
       super(props);
-
       this.state = {
         component: null,
       };
@@ -14,7 +13,6 @@ export default function asyncComponent(importComponent) {
 
     componentDidMount() {
       importComponent().then(res => {
-        console.log(res);
         const {default: component} = res;
         this.setState({
           component

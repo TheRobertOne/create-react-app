@@ -12,12 +12,18 @@ class Navigation extends Component {
         activeKey: '/'
     }
     handleSelect = (activeKey) => {
-        console.log(activeKey);
         this.setState({
             activeKey
         });
         this.props.dispatch(push(activeKey))
     }
+    
+    componentDidMount () {
+        console.log(this.props);
+        const {pathname} = this.props.router.location;
+        this.handleSelect(pathname)
+    }
+
     render() {
         const {activeKey} = this.state;
         const url = [
@@ -43,4 +49,4 @@ class Navigation extends Component {
     }
 }
 
-export default connect()(CSSModules(Navigation, styles));
+export default connect(state => state)(CSSModules(Navigation, styles));
