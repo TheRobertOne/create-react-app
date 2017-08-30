@@ -119,11 +119,11 @@ const cardTarget = {
 
 class Card extends Component {
   render() {
-    const { text, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { text, isDragging, connectDragSource, connectDropTarget, isOver } = this.props;
     const opacity = isDragging ? 0 : 1;
-
+    const backgroundColor = isOver ? 'yellow' : null;
     return connectDragSource(connectDropTarget(
-      <div style={{ ...style, opacity }}>
+      <div style={{ ...style, opacity, backgroundColor }}>
         {text}
       </div>,
     ));
@@ -140,8 +140,9 @@ export default flow(
         })
     ),
     DropTarget(
-        ItemTypes.CARD, cardTarget, connect => ({
+        ItemTypes.CARD, cardTarget, (connect, monitor) => ({
             connectDropTarget: connect.dropTarget(),
+            isOver: monitor.isOver()
         })
     )
 )(Card);
