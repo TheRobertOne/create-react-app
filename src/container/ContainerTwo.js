@@ -28,7 +28,6 @@ class ContainerTwo extends React.Component {
 
         <Motion defaultStyle={{x: 1000}} style={{x: spring(this.state.open ? 400 : 0)}}>
           {({x}) => {
-              console.log(x);
               return (
                 // children is a callback which should accept the current value of
                 // `style`
