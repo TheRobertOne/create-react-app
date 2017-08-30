@@ -2,7 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 import Colors from './Colors';
-import {flow} from 'lodash'
+import {flow} from 'lodash';
+
+const propTypes = {
+    connectDragSource: PropTypes.func.isRequired,
+    isDragging: PropTypes.bool.isRequired,
+    color: PropTypes.string.isRequired,
+    forbidDrag: PropTypes.bool.isRequired,
+    onToggleForbidDrag: PropTypes.func.isRequired,
+    children: PropTypes.node,
+};
+
 const style = {
   border: '1px dashed gray',
   padding: '0.5rem',
@@ -19,16 +29,7 @@ const ColorSource = {
   },
 };
 
-const propTypes = {
-  connectDragSource: PropTypes.func.isRequired,
-  isDragging: PropTypes.bool.isRequired,
-  color: PropTypes.string.isRequired,
-  forbidDrag: PropTypes.bool.isRequired,
-  onToggleForbidDrag: PropTypes.func.isRequired,
-  children: PropTypes.node,
-};
 class SourceBox extends Component {
-
   render() {
     const { color, children, isDragging, connectDragSource, forbidDrag, onToggleForbidDrag } = this.props;
     const opacity = isDragging ? 0.4 : 1;
@@ -65,6 +66,7 @@ class SourceBox extends Component {
     );
   }
 }
+
 SourceBox.propTypes = propTypes;
 
 SourceBox = flow(
@@ -80,27 +82,23 @@ SourceBox = flow(
     // )
 )(SourceBox);
 
-export default class StatefulSourceBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      forbidDrag: false,
-    };
-  }
+class StatefulSourceBox extends Component {
+    state = {forbidDrag: false}
+    
+    handleToggleForbidDrag() {
+      this.setState({
+        forbidDrag: !this.state.forbidDrag,
+      });
+    }
+    render() {
+        return (
+            <SourceBox
+                {...this.props}
+                forbidDrag={this.state.forbidDrag}
+                onToggleForbidDrag={() => this.handleToggleForbidDrag()}
+            />
+        );
+    }
 
-  render() {
-    return (
-      <SourceBox
-        {...this.props}
-        forbidDrag={this.state.forbidDrag}
-        onToggleForbidDrag={() => this.handleToggleForbidDrag()}
-      />
-    );
-  }
-
-  handleToggleForbidDrag() {
-    this.setState({
-      forbidDrag: !this.state.forbidDrag,
-    });
-  }
 }
+export default StatefulSourceBox;

@@ -4,13 +4,14 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import SourceBox from './SourceBox';
 import TargetBox from './TargetBox';
 import Colors from './Colors';
+import styles from './ContainerThree.less';
+import CSSModules from 'react-css-modules';
 
-// @DragDropContext(HTML5Backend)
 class ContainerThree extends Component {
   render() {
     return (
-      <div style={{ overflow: 'hidden', clear: 'both', margin: '-.5rem' }}>
-        <div style={{ float: 'left' }}>
+      <div styleName='container-three'>
+        <div>
           <SourceBox color={Colors.BLUE}>
             <SourceBox color={Colors.YELLOW}>
               <SourceBox color={Colors.YELLOW} />
@@ -21,12 +22,13 @@ class ContainerThree extends Component {
             </SourceBox>
           </SourceBox>
         </div>
-
-        <div style={{ float: 'left', marginLeft: '5rem', marginTop: '.5rem' }}>
+        <div>
           <TargetBox />
         </div>
       </div>
     );
   }
 }
-export default DragDropContext(HTML5Backend)(ContainerThree)
+export default DragDropContext(HTML5Backend)(
+  CSSModules(ContainerThree, styles) 
+)

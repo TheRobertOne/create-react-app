@@ -18,15 +18,15 @@ const ColorTarget = {
   },
 };
 
+const propTypes = {
+  isOver: PropTypes.bool.isRequired,
+  canDrop: PropTypes.bool.isRequired,
+  draggingColor: PropTypes.string,
+  lastDroppedColor: PropTypes.string,
+  connectDropTarget: PropTypes.func.isRequired,
+  onDrop: PropTypes.func.isRequired,
+};
 class TargetBox extends Component {
-  static propTypes = {
-    isOver: PropTypes.bool.isRequired,
-    canDrop: PropTypes.bool.isRequired,
-    draggingColor: PropTypes.string,
-    lastDroppedColor: PropTypes.string,
-    connectDropTarget: PropTypes.func.isRequired,
-    onDrop: PropTypes.func.isRequired,
-  };
 
   render() {
     const { canDrop, isOver, draggingColor, lastDroppedColor, connectDropTarget } = this.props;
@@ -56,7 +56,7 @@ class TargetBox extends Component {
     );
   }
 }
-
+TargetBox.propTypes = propTypes;
 TargetBox = flow(
     // DragSource(props => props.color, ColorSource, (connect, monitor) => ({
     //     connectDragSource: connect.dragSource(),
