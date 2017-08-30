@@ -4,13 +4,6 @@ import { DragSource, DropTarget } from 'react-dnd';
 import ItemTypes from './ItemTypes';
 import {flow} from 'lodash';
 
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-};
 const propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
@@ -47,11 +40,11 @@ const cardTarget = {
 
 class Card extends Component {
   render() {
-    const { text, isDragging, connectDragSource, connectDropTarget, isOver } = this.props;
+    const { text, isDragging, connectDragSource, connectDropTarget, isOver, className } = this.props;
     const opacity = isDragging ? 0.3 : 1;
     const backgroundColor = isOver ? 'yellow' : null;
     return connectDragSource(connectDropTarget(
-      <div style={{ ...style, opacity, backgroundColor }}>
+      <div className={className} style={{ opacity, backgroundColor }}>
         {text}
       </div>,
     ));

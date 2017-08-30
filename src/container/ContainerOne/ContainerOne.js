@@ -33,7 +33,11 @@ class ContainerOne extends Component {
     };
     moveCard = (draggedindex, overIndex) => {
         let {cards} = this.state;
-        cards = helper.swapArr(cards, draggedindex, overIndex)
+        // 交换
+        // cards = helper.swapArr(cards, draggedindex, overIndex)
+
+        // 插入
+        cards = helper.insertArr(cards, draggedindex, overIndex);
         this.setState({
             cards
         });
@@ -45,6 +49,7 @@ class ContainerOne extends Component {
                 {
                     cards.map((card, i) => (
                     <Card
+                        className='item'
                         key={card.id}
                         index={i}
                         id={card.id}
