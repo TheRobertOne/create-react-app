@@ -46,6 +46,7 @@ class ContainerOne extends Component {
         const { cards } = this.state;
         return (
             <div styleName='container-one'>
+                <div>
                 {
                     cards.map((card, i) => (
                     <Card
@@ -59,6 +60,7 @@ class ContainerOne extends Component {
                     />
                     ))
                 }
+                </div>
             </div>
         );
     }
