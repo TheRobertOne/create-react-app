@@ -4,45 +4,45 @@ import styles from './ContainerOne.less';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Card from './Card';
-import update from 'react/lib/update';
 
 class ContainerOne extends Component {
     state = {
         cards: [{
             id: 1,
-            text: 'Write a cool JS library',
+            text: '1',
         }, {
             id: 2,
-            text: 'Make it generic enough',
+            text: '2',
         }, {
             id: 3,
-            text: 'Write README',
+            text: '3',
         }, {
             id: 4,
-            text: 'Create some examples',
+            text: '4',
         }, {
             id: 5,
-            text: 'is taller than the others)',
+            text: '5',
         }, {
             id: 6,
-            text: '???',
+            text: '6',
         }, {
             id: 7,
-            text: 'PROFIT',
+            text: '7',
         }]
     };
-    moveCard = (dragIndex, hoverIndex) => {
-        const { cards } = this.state;
-        const dragCard = cards[dragIndex];
-        
-        this.setState(update(this.state, {
-            cards: {
-            $splice: [
-                [dragIndex, 1],
-                [hoverIndex, 0, dragCard],
-            ],
-            },
-        }));
+    moveCard = (draggedindex, overIndex) => {
+        let {cards} = this.state;
+        cards = this.swap(cards, draggedindex, overIndex)
+        this.setState({
+            cards
+        });
+    }
+    swap = (array, first, second) => {
+        let tmp = null;
+        tmp = array[first];
+        array[first] = array[second];
+        array[second] = tmp;
+        return array; 
     }
     render() {
         const { cards } = this.state;
@@ -56,6 +56,7 @@ class ContainerOne extends Component {
                         id={card.id}
                         text={card.text}
                         moveCard={this.moveCard}
+                        findCard={this.findCard}
                     />
                     ))
                 }
