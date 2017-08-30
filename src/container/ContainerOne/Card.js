@@ -35,7 +35,6 @@ const cardTarget = {
     drop(props, monitor) {
         // monitor.getItem()是获取拖动源的信息
         // props 是获取 覆盖源的信息
-        // console.log('drop', props, monitor.getItem())
         const { index: draggedindex } = monitor.getItem();
         const { index: overIndex } = props;
 

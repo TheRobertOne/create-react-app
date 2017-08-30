@@ -4,6 +4,7 @@ import styles from './ContainerOne.less';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Card from './Card';
+import helper from '../../helper';
 
 class ContainerOne extends Component {
     state = {
@@ -32,17 +33,10 @@ class ContainerOne extends Component {
     };
     moveCard = (draggedindex, overIndex) => {
         let {cards} = this.state;
-        cards = this.swap(cards, draggedindex, overIndex)
+        cards = helper.swapArr(cards, draggedindex, overIndex)
         this.setState({
             cards
         });
-    }
-    swap = (array, first, second) => {
-        let tmp = null;
-        tmp = array[first];
-        array[first] = array[second];
-        array[second] = tmp;
-        return array; 
     }
     render() {
         const { cards } = this.state;
