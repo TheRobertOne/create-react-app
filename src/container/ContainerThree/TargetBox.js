@@ -14,6 +14,7 @@ const style = {
 
 const ColorTarget = {
   drop(props, monitor) {
+    console.log(monitor.getItem())
     props.onDrop(monitor.getItemType());
   },
 };
@@ -26,6 +27,7 @@ const propTypes = {
   connectDropTarget: PropTypes.func.isRequired,
   onDrop: PropTypes.func.isRequired,
 };
+
 class TargetBox extends Component {
 
   render() {
@@ -43,7 +45,7 @@ class TargetBox extends Component {
       default:
         break;
     }
-
+    console.log(canDrop)
     return connectDropTarget(
       <div style={{ ...style, backgroundColor, opacity }}>
 
@@ -56,7 +58,9 @@ class TargetBox extends Component {
     );
   }
 }
+
 TargetBox.propTypes = propTypes;
+
 TargetBox = flow(
     // DragSource(props => props.color, ColorSource, (connect, monitor) => ({
     //     connectDragSource: connect.dragSource(),
@@ -71,9 +75,12 @@ TargetBox = flow(
 )(TargetBox)
 
 export default class StatefulTargetBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { lastDroppedColor: null };
+  state = { lastDroppedColor: null }
+
+  handleDrop = (color) => {
+    this.setState({
+      lastDroppedColor: color,
+    });
   }
 
   render() {
@@ -81,14 +88,9 @@ export default class StatefulTargetBox extends Component {
       <TargetBox
         {...this.props}
         lastDroppedColor={this.state.lastDroppedColor}
-        onDrop={color => this.handleDrop(color)}
+        onDrop={this.handleDrop}
       />
     );
   }
 
-  handleDrop(color) {
-    this.setState({
-      lastDroppedColor: color,
-    });
-  }
 }

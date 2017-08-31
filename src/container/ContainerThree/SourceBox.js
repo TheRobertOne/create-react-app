@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 import Colors from './Colors';
 import {flow} from 'lodash';
 
@@ -8,8 +8,8 @@ const propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
     color: PropTypes.string.isRequired,
-    forbidDrag: PropTypes.bool.isRequired,
-    onToggleForbidDrag: PropTypes.func.isRequired,
+    // forbidDrag: PropTypes.bool.isRequired,
+    // onToggleForbidDrag: PropTypes.func.isRequired,
     children: PropTypes.node,
 };
 
@@ -20,85 +20,64 @@ const style = {
 };
 
 const ColorSource = {
-  canDrag(props) {
-    return !props.forbidDrag;
+  // canDrag(props) {
+  //   return !props.forbidDrag;
+  // },
+  beginDrag(props) {
+    return props;
+  },
+};
+
+const cardTarget = {
+  canDrop() {
+      return true;
   },
 
-  beginDrag() {
-    return {};
+  drop(props, monitor) {
+      console.log('被覆盖的props', props);
+      console.log('拖拽的，从beginDrag传过来的props', monitor.getItem())
   },
 };
 
 class SourceBox extends Component {
   render() {
-    const { color, children, isDragging, connectDragSource, forbidDrag, onToggleForbidDrag } = this.props;
+    const { children, isDragging, connectDragSource, connectDropTarget } = this.props;
     const opacity = isDragging ? 0.4 : 1;
 
-    let backgroundColor;
-    switch (color) {
-      case Colors.YELLOW:
-        backgroundColor = 'lightgoldenrodyellow';
-        break;
-      case Colors.BLUE:
-        backgroundColor = 'lightblue';
-        break;
-      default:
-        break;
-    }
-
-    return connectDragSource(
+    return connectDropTarget(connectDragSource(
       <div
         style={{
           ...style,
-          backgroundColor,
-          opacity,
-          cursor: forbidDrag ? 'default' : 'move',
+          opacity
+          // cursor: forbidDrag ? 'default' : 'move',
         }}
       >
-        <input
-          type="checkbox"
-          checked={forbidDrag}
-          onChange={onToggleForbidDrag}
-        />
         <small>Forbid drag</small>
         {children}
       </div>,
-    );
+    ));
   }
 }
 
 SourceBox.propTypes = propTypes;
 
 SourceBox = flow(
-    DragSource(props => props.color, ColorSource, (connect, monitor) => ({
+    DragSource(
+      props => props.color,
+      ColorSource,
+      (connect, monitor) => ({
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging(),
-    })),
-    // DropTarget(
-    //     ItemTypes.CARD, cardTarget, (connect, monitor) => ({
-    //         connectDropTarget: connect.dropTarget(),
-    //         isOver: monitor.isOver()
-    //     })
-    // )
+      })
+    ),
+    DropTarget(
+        [Colors.YELLOW, Colors.BLUE],
+        cardTarget,
+        (connect, monitor) => ({
+            connectDropTarget: connect.dropTarget(),
+            isOver: monitor.isOver()
+        })
+    )
 )(SourceBox);
 
-class StatefulSourceBox extends Component {
-    state = {forbidDrag: false}
-    
-    handleToggleForbidDrag() {
-      this.setState({
-        forbidDrag: !this.state.forbidDrag,
-      });
-    }
-    render() {
-        return (
-            <SourceBox
-                {...this.props}
-                forbidDrag={this.state.forbidDrag}
-                onToggleForbidDrag={() => this.handleToggleForbidDrag()}
-            />
-        );
-    }
-
-}
-export default StatefulSourceBox;
+export default SourceBox;
