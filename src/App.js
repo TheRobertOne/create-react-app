@@ -8,7 +8,6 @@ class App extends Component {
         return (
             <div styleName="app-wrap">
                 <Navigation />
-                <hr />
                 <Router />
             </div>
         )
