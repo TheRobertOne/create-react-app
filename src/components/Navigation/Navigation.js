@@ -9,15 +9,18 @@ class Navigation extends Component {
         activeKey: '/'
     }
     handleSelect = (activeKey) => {
+        // console.log(activeKey)
         this.setState({
             activeKey
         });
+        activeKey = activeKey.replace(/.\$/g, '');
         this.props.dispatch(push(activeKey))
     }
     
     componentDidMount () {
         // console.log(this.props);
-        const {pathname} = this.props.router.location;
+        let {pathname} = this.props.router.location;
+        pathname = pathname === '/' ? '.$/' : pathname;
         this.handleSelect(pathname)
     }
 
@@ -32,8 +35,8 @@ class Navigation extends Component {
         return (
             <div styleName="navigation-wrap">
                 <Menu
-                    onClick={this.handleClick}
-                    selectedKeys={[this.state.current]}
+                    onClick={(e) => this.handleSelect(e.key)}
+                    selectedKeys={[activeKey]}
                     mode="horizontal"
                 >
                     {
