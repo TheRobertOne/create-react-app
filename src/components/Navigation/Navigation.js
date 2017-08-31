@@ -20,7 +20,7 @@ class Navigation extends Component {
     componentDidMount () {
         // console.log(this.props);
         let {pathname} = this.props.router.location;
-        pathname = pathname === '/' ? '.$/' : pathname;
+        pathname = `.$${pathname}`;
         this.handleSelect(pathname)
     }
 
