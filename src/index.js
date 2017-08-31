@@ -8,6 +8,7 @@ import App from './App'
 import configureStore, { history } from './store/configureStore'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'
+import 'antd/dist/antd.css';
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
 

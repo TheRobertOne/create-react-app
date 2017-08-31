@@ -3,10 +3,7 @@ import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import styles from './Navigation.less'
-import {
-    Nav, NavItem
-} from 'react-bootstrap'
-
+import {Icon, Menu} from 'antd'
 class Navigation extends Component {
     state = {
         activeKey: '/'
@@ -34,16 +31,22 @@ class Navigation extends Component {
         ]
         return (
             <div styleName="navigation-wrap">
-                <Nav bsStyle="pills" activeKey={activeKey} onSelect={this.handleSelect}>
+                <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={[this.state.current]}
+                    mode="horizontal"
+                >
                     {
                         // 模拟4个数据而已
                         url.map((item, index) => {
                             return (
-                                <NavItem eventKey={item} key={item}>Container {item}</NavItem>
+                                <Menu.Item key={item}>
+                                    <Icon type="appstore" />Navigation Two
+                                </Menu.Item>
                             )
                         })
                     }
-                </Nav>
+                </Menu>
             </div>
         );
     }
