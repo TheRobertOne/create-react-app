@@ -1,5 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
+import {Button} from 'antd';
 
-const ContainerFour = () => <div>ContainerFour</div>
+class ContainerFour extends Component {
 
-export default ContainerFour
+    render() {
+        return (
+            <Button>hello world</Button>
+        );
+    }
+}
+
+export default ContainerFour;
