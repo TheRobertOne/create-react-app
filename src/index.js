@@ -10,6 +10,10 @@ import 'antd/dist/antd.css';
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
 
+// 优化移动端点击
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
 const store = configureStore();
 
 ReactDOM.render(
