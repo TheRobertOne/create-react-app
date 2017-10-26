@@ -7,12 +7,13 @@ import { ConnectedRouter } from 'react-router-redux'
 import App from './App'
 import configureStore, { history } from './store/configureStore'
 import 'antd/dist/antd.css';
+
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
 
 // 优化移动端点击
-var injectTapEventPlugin = require("react-tap-event-plugin");
-injectTapEventPlugin();
+// var injectTapEventPlugin = require("react-tap-event-plugin");
+// injectTapEventPlugin();
 
 const store = configureStore();
 
