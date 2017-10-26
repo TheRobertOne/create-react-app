@@ -15,3 +15,16 @@ class App extends Component {
 }
 
 export default CSSModules(App, styles);
+
+
+
+
+
+
+
+// const regex = /h - d/;
+// console.log(regex.test('hello  world'))
+
+
+
+
